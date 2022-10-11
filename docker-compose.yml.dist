@@ -1,23 +1,23 @@
 version: '3.5'
 
 services:
-  docker-dev-env-for-symfony-web:
-    container_name: docker-dev-env-for-symfony-web
+  tdd-init-web:
+    container_name: tdd-init-web
     build:
       context: ./docker/nginx
       args:
         UID: $U_ID
     ports:
-      - 1000:80
+      - "1000:80"
     volumes:
       - ./public:/appdata/www/public
     depends_on:
-      - docker-dev-env-for-symfony-be
+      - tdd-init-be
     networks:
-      - docker-dev-env-for-symfony-network
+      - tdd-init-network
 
-  docker-dev-env-for-symfony-be:
-    container_name: docker-dev-env-for-symfony-be
+  tdd-init-be:
+    container_name: tdd-init-be
     build:
       context: docker/php
       args:
@@ -31,28 +31,28 @@ services:
     environment:
       XDEBUG_CLIENT_HOST: 172.17.0.1
       XDEBUG_CLIENT_PORT: 9003
-      PHP_IDE_CONFIG: serverName=docker-dev-env-for-symfony
+      PHP_IDE_CONFIG: serverName=tdd-init
     networks:
-      - docker-dev-env-for-symfony-network
+      - tdd-init-network
 
-  docker-dev-env-for-symfony-db:
-    container_name: docker-dev-env-for-symfony-db
+  tdd-init-db:
+    container_name: tdd-init-db
     build:
       context: ./docker/database
     ports:
-      - 10000:3306
+      - "10000:3306"
     environment:
       MYSQL_DATABASE: database
       MYSQL_ROOT_PASSWORD: root
     volumes:
-      - docker-dev-env-for-symfony-db-data:/var/lib/mysql
+      - tdd-init-db-data:/var/lib/mysql
     networks:
-      - docker-dev-env-for-symfony-network
+      - tdd-init-network
     command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
 
 volumes:
-  docker-dev-env-for-symfony-db-data:
+  tdd-init-db-data:
 
 networks:
-  docker-dev-env-for-symfony-network:
+  tdd-init-network:
     external: true

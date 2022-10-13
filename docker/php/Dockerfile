@@ -28,6 +28,7 @@ RUN chmod a+x php-cs-fixer
 RUN mv php-cs-fixer /usr/local/bin/php-cs-fixer
 
 RUN mkdir -p /appdata/www
+RUN mkdir -p /appdata/www/var/cache/test
 
 # Config XDEBUG
 COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini

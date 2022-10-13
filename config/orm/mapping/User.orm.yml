@@ -1,0 +1,26 @@
+App\Entity\User:
+  type: entity
+  repositoryClass: App\Repository\UserRepository
+  table: users
+  id:
+    id:
+      type: string
+      unique: true
+      nullable: false
+      columnDefinition: "CHAR(36) NOT NULL"
+  fields:
+    name:
+      type: string
+      length: 50
+      column: name
+      nullable: false
+    email:
+      type: string
+      length: 100
+      column: email
+      nullable: false
+    password:
+      type: string
+      length: 100
+      column: password
+      nullable: true
